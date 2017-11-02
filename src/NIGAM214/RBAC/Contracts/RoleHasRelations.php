@@ -1,6 +1,6 @@
 <?php
 
-namespace DCN\RBAC\Contracts;
+namespace NIGAM214\RBAC\Contracts;
 
 interface RoleHasRelations
 {
@@ -47,7 +47,7 @@ interface RoleHasRelations
     /**
      * Attach permission to a role.
      *
-     * @param int|\DCN\RBAC\Models\Permission $permission
+     * @param int|\NIGAM214\RBAC\Models\Permission $permission
      * @param bool $granted
      * @return bool|int
      */
@@ -56,7 +56,7 @@ interface RoleHasRelations
     /**
      * Detach permission from a role.
      *
-     * @param int|\DCN\RBAC\Models\Permission $permission
+     * @param int|\NIGAM214\RBAC\Models\Permission $permission
      * @return int
      */
     public function detachPermission($permission);

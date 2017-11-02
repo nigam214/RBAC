@@ -1,6 +1,6 @@
 <?php
 
-namespace DCN\RBAC\Traits;
+namespace NIGAM214\RBAC\Traits;
 
 trait PermissionHasRelations
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace DCN\RBAC\Contracts;
+namespace NIGAM214\RBAC\Contracts;
 
 interface PermissionHasRelations
 {

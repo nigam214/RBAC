@@ -1,10 +1,10 @@
 <?php
 
-namespace DCN\RBAC\Middleware;
+namespace NIGAM214\RBAC\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-use DCN\RBAC\Exceptions\PermissionDeniedException;
+use NIGAM214\RBAC\Exceptions\PermissionDeniedException;
 
 class VerifyPermission
 {
@@ -30,7 +30,7 @@ class VerifyPermission
      * @param \Closure $next
      * @param int|string $permissions
      * @return mixed
-     * @throws \DCN\RBAC\Exceptions\PermissionDeniedException
+     * @throws \NIGAM214\RBAC\Exceptions\PermissionDeniedException
      */
     public function handle($request, Closure $next, ...$permissions)
     {

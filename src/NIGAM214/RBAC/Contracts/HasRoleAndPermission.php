@@ -1,6 +1,6 @@
 <?php
 
-namespace DCN\RBAC\Contracts;
+namespace NIGAM214\RBAC\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,7 +32,7 @@ interface HasRoleAndPermission
     /**
      * Attach role to a user.
      *
-     * @param int|\DCN\RBAC\Models\Role $role
+     * @param int|\NIGAM214\RBAC\Models\Role $role
      * @param bool $granted
      * @return bool|null
      */
@@ -41,7 +41,7 @@ interface HasRoleAndPermission
     /**
      * Detach role from a user.
      *
-     * @param int|\DCN\RBAC\Models\Role $role
+     * @param int|\NIGAM214\RBAC\Models\Role $role
      * @return int
      */
     public function detachRole($role);
@@ -97,7 +97,7 @@ interface HasRoleAndPermission
     /**
      * Attach permission to a user.
      *
-     * @param int|\DCN\RBAC\Models\Permission $permission
+     * @param int|\NIGAM214\RBAC\Models\Permission $permission
      * @param bool $granted
      * @return bool|null
      */
@@ -106,7 +106,7 @@ interface HasRoleAndPermission
     /**
      * Detach permission from a user.
      *
-     * @param int|\DCN\RBAC\Models\Permission $permission
+     * @param int|\NIGAM214\RBAC\Models\Permission $permission
      * @return int
      */
     public function detachPermission($permission);

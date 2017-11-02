@@ -1,10 +1,11 @@
-## [No Longer Maintained]
-### Please See https://github.com/mbm-rafal/RBAC Instead!
-
 # RBAC For Laravel 5.3
 Powerful package for handling roles and permissions in Laravel 5.3
 
 Based on the [Bican/Roles](https://github.com/romanbican/roles/) Package.
+
+### So whats New?
+
+This package is forked from https://github.com/DynamicCodeNinja/RBAC and modified to open more control on RCAB. Package name has been changed to make it a new project.
 
 ### So whats Different?
 
@@ -52,7 +53,7 @@ Pull this package in through Composer (file `composer.json`).
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
-        "dcn/rbac": "~2.0"
+        "nigam214/rbac": "~2.0"
     }
 }
 ```
@@ -78,7 +79,7 @@ Add the package to your application service providers in `config/app.php` file.
     /**
      * Third Party Service Providers...
      */
-    DCN\RBAC\RBACServiceProvider::class,
+    NIGAM214\RBAC\RBACServiceProvider::class,
 
 ],
 ```
@@ -87,8 +88,8 @@ Add the package to your application service providers in `config/app.php` file.
 
 Publish the package config file and migrations to your application. Run these commands inside your terminal.
 
-    php artisan vendor:publish --provider="DCN\RBAC\RBACServiceProvider" --tag=config
-    php artisan vendor:publish --provider="DCN\RBAC\RBACServiceProvider" --tag=migrations
+    php artisan vendor:publish --provider="NIGAM214\RBAC\RBACServiceProvider" --tag=config
+    php artisan vendor:publish --provider="NIGAM214\RBAC\RBACServiceProvider" --tag=migrations
 
 And also run migrations.
 
@@ -101,8 +102,8 @@ And also run migrations.
 Include `HasRoleAndPermission` trait and also implement `HasRoleAndPermission` contract inside your `User` model.
 
 ```php
-use DCN\RBAC\Traits\HasRoleAndPermission;
-use DCN\RBAC\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
+use NIGAM214\RBAC\Traits\HasRoleAndPermission;
+use NIGAM214\RBAC\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, HasRoleAndPermissionContract
 {
@@ -116,7 +117,7 @@ And that's it!
 ### Creating Roles
 
 ```php
-use DCN\RBAC\Models\Role;
+use NIGAM214\RBAC\Models\Role;
 
 $adminRole = Role::create([
     'name' => 'Admin',
@@ -209,7 +210,7 @@ if ($user->roleIs('admin|moderator.*')) { // or $user->roleIs('admin, moderator.
 It's very simple thanks to `Permission` model.
 
 ```php
-use DCN\RBAC\Models\Permission;
+use NIGAM214\RBAC\Models\Permission;
 
 $createUsersPermission = Permission::create([
     'name' => 'Create users',
@@ -229,7 +230,7 @@ You can attach permissions to a role or directly to a specific user (and of cour
 
 ```php
 use App\User;
-use DCN\RBAC\Models\Role;
+use NIGAM214\RBAC\Models\Role;
 
 $role = Role::find($roleId);
 $role->attachPermission($createUsersPermission); // permission attached to a role
@@ -256,7 +257,7 @@ Denied permissions take precedent over inherited and granted permissions.
 
 ```php
 use App\User;
-use DCN\RBAC\Models\Role;
+use NIGAM214\RBAC\Models\Role;
 
 $role = Role::find($roleId);
 $role->attachPermission($createUsersPermission, FALSE); // Deny this permission to all users who have or inherit this role.
@@ -334,7 +335,7 @@ Let's say you have an article and you want to edit it. This article belongs to a
 
 ```php
 use App\Article;
-use DCN\RBAC\Models\Permission;
+use NIGAM214\RBAC\Models\Permission;
 
 $editArticlesPermission = Permission::create([
     'name' => 'Edit articles',
@@ -397,8 +398,8 @@ protected $routeMiddleware = [
     'auth' => \App\Http\Middleware\Authenticate::class,
     'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
     'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-    'role' => \DCN\RBAC\Middleware\VerifyRole::class,
-    'permission' => \DCN\RBAC\Middleware\VerifyPermission::class,
+    'role' => \NIGAM214\RBAC\Middleware\VerifyRole::class,
+    'permission' => \NIGAM214\RBAC\Middleware\VerifyPermission::class,
 ];
 ```
 
@@ -421,7 +422,7 @@ $router->post('/example', [
 You also can pass multiple parameters on `VerifyPermission` and `VerifyRole` middleware,
 example: `role:admin,moderator,true`, the last parameter will be used to determine if user has all role or just any of the role passed, default value would be `false`.
 
-It throws `\DCN\RBAC\Exception\RoleDeniedException` or `\DCN\RBAC\Exception\PermissionDeniedException` exceptions if it goes wrong.
+It throws `\NIGAM214\RBAC\Exception\RoleDeniedException` or `\NIGAM214\RBAC\Exception\PermissionDeniedException` exceptions if it goes wrong.
 
 You can catch these exceptions inside `app/Exceptions/Handler.php` file and do whatever you want.
 
@@ -435,7 +436,7 @@ You can catch these exceptions inside `app/Exceptions/Handler.php` file and do w
  */
 public function render($request, Exception $e)
 {
-    if ($e instanceof \DCN\RBAC\Exceptions\RoleDeniedException) {
+    if ($e instanceof \NIGAM214\RBAC\Exceptions\RoleDeniedException) {
         // you can for example flash message, redirect...
         return redirect()->back();
     }

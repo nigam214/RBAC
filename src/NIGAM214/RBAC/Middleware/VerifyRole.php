@@ -1,10 +1,10 @@
 <?php
 
-namespace DCN\RBAC\Middleware;
+namespace NIGAM214\RBAC\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-use DCN\RBAC\Exceptions\RoleDeniedException;
+use NIGAM214\RBAC\Exceptions\RoleDeniedException;
 
 class VerifyRole
 {
@@ -30,7 +30,7 @@ class VerifyRole
      * @param \Closure $next
      * @param int|string $role
      * @return mixed
-     * @throws \DCN\RBAC\Exceptions\RoleDeniedException
+     * @throws \NIGAM214\RBAC\Exceptions\RoleDeniedException
      */
     public function handle($request, Closure $next, ...$roles)
     {

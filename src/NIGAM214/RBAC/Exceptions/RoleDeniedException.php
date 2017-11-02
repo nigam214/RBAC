@@ -1,6 +1,6 @@
 <?php
 
-namespace DCN\RBAC\Exceptions;
+namespace NIGAM214\RBAC\Exceptions;
 
 class RoleDeniedException extends AccessDeniedException
 {

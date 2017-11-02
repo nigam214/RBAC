@@ -1,12 +1,16 @@
 {
-    "name": "dcn/rbac",
-    "description": "Powerful RBAC package for Laravel 5.1",
+    "name": "nigam214/rbac",
+    "description": "Powerful RBAC package for Laravel 5.3+",
     "keywords": ["roles", "permissions", "rbac", "auth", "laravel", "illuminate"],
     "license": "MIT",
     "authors": [
         {
             "name": "Will G",
             "email": "willg@cloudmy.it"
+        },
+        {
+            "name": "Ashish Nigam",
+            "email": "ashish.nigam@gmail.com"
         }
     ],
     "require": {
@@ -20,7 +24,7 @@
     },
     "autoload": {
         "psr-0": {
-            "DCN\\RBAC": "src/"
+            "NIGAM214\\RBAC": "src/"
         }
     }
 }

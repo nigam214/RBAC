@@ -34,14 +34,14 @@ return [
     |--------------------------------------------------------------------------
     |
     | If you want, you can replace default models from this package by models
-    | you created. Have a look at `DCN\RBAC\Models\Role` model and
-    | `DCN\RBAC\Models\Permission` model.
+    | you created. Have a look at `NIGAM214\RBAC\Models\Role` model and
+    | `NIGAM214\RBAC\Models\Permission` model.
     |
     */
 
     'models' => [
-        'role' => DCN\RBAC\Models\Role::class,
-        'permission' => DCN\RBAC\Models\Permission::class,
+        'role' => NIGAM214\RBAC\Models\Role::class,
+        'permission' => NIGAM214\RBAC\Models\Permission::class,
     ],
 
     /*

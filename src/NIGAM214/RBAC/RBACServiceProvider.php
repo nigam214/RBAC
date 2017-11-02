@@ -1,6 +1,6 @@
 <?php
 
-namespace DCN\RBAC;
+namespace NIGAM214\RBAC;
 
 use Illuminate\Support\ServiceProvider;
 
