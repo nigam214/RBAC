@@ -9,3 +9,4 @@ composer.phar
 .php_cs
 .styleci.yml
 .editorconfig
+nbproject/private
