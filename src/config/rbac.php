@@ -44,6 +44,17 @@ return [
         'role' => NIGAM214\RBAC\Models\Role::class,
         'permission' => NIGAM214\RBAC\Models\Permission::class,
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Names
+    |--------------------------------------------------------------------------
+    |
+    | If you want, you can replace default models name with your custom models
+    | you created. These model names will affect table names.
+    |
+    */
+
     'names' => [
         'object' => 'user',
         'role' => 'role',
