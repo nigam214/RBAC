@@ -44,6 +44,11 @@ return [
         'role' => NIGAM214\RBAC\Models\Role::class,
         'permission' => NIGAM214\RBAC\Models\Permission::class,
     ],
+    'names' => [
+        'object' => 'user',
+        'role' => 'role',
+        'permission' => 'permission',
+    ],
 
     /*
     |--------------------------------------------------------------------------

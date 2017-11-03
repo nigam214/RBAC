@@ -12,7 +12,8 @@ class CreatePermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        $permissions = str_plural(config('rbac.names.permission'));
+        Schema::create($permissions, function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('slug');
@@ -29,6 +30,7 @@ class CreatePermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('permissions');
+        $permissions = str_plural(config('rbac.names.permission'));
+        Schema::drop($permissions);
     }
 }

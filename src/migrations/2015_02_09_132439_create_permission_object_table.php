@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePermissionRoleTable extends Migration
+class CreatePermissionUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,17 +12,17 @@ class CreatePermissionRoleTable extends Migration
      */
     public function up()
     {
+        $object = config('rbac.names.object');
         $permission = config('rbac.names.permission');
-        $role = config('rbac.names.role');
-        $permission_role = ($permission < $role) ? "${permission}_${role}" : "${role}_${permission}";
-        $roles = str_plural($role);
+        $object_permission = ($object < $permission) ? "${object}_${permission}" : "${permission}_${object}";
+        $objects = str_plural($object);
         $permissions = str_plural($permission);
-        Schema::create($permission_role, function (Blueprint $table) use($permission, $role, $permissions, $roles) {
+        Schema::create($object_permission, function (Blueprint $table) use($object, $permission, $objects, $permissions) {
             $table->increments('id');
             $table->integer($permission . '_id')->unsigned()->index();
             $table->foreign($permission . '_id')->references('id')->on($permissions)->onDelete('cascade');
-            $table->integer($role . '_id')->unsigned()->index();
-            $table->foreign($role . '_id')->references('id')->on($roles)->onDelete('cascade');
+            $table->integer($object . '_id')->unsigned()->index();
+            $table->foreign($object . '_id')->references('id')->on($objects)->onDelete('cascade');
             $table->boolean('granted')->default(true);
             $table->timestamps();
         });
@@ -35,9 +35,9 @@ class CreatePermissionRoleTable extends Migration
      */
     public function down()
     {
+        $object = config('rbac.names.object');
         $permission = config('rbac.names.permission');
-        $role = config('rbac.names.role');
-        $permission_role = ($permission < $role) ? "${permission}_${role}" : "${role}_${permission}";
-        Schema::drop($permission_role);
+        $object_permission = ($object < $permission) ? "${object}_${permission}" : "${permission}_${object}";
+        Schema::drop($object_permission);
     }
 }

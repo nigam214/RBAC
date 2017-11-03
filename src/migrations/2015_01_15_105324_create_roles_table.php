@@ -12,13 +12,14 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        $roles = str_plural(config('rbac.names.role'));
+        Schema::create($roles, function (Blueprint $table) use($roles) {
             $table->increments('id');
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('description')->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
-            $table->foreign('parent_id')->references('id')->on('roles');
+            $table->foreign('parent_id')->references('id')->on($roles);
             $table->timestamps();
         });
     }
@@ -30,6 +31,7 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('roles');
+        $roles = str_plural(config('rbac.names.role'));
+        Schema::drop($roles);
     }
 }
