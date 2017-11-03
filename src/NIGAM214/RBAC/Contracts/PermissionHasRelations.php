@@ -12,9 +12,9 @@ interface PermissionHasRelations
     public function roles();
 
     /**
-     * Permission belongs to many users.
+     * Permission belongs to many objects.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users();
+    public function objects();
 }

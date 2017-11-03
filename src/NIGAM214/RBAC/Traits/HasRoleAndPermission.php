@@ -23,7 +23,7 @@ trait HasRoleAndPermission
     protected $permissions;
 
     /**
-     * User belongs to many roles.
+     * Object belongs to many roles.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -47,11 +47,11 @@ trait HasRoleAndPermission
     }
 
     /**
-     * User belongs to many permissions.
+     * Object belongs to many permissions.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function userPermissions()
+    public function objectPermissions()
     {
         return $this->belongsToMany(config('rbac.models.permission'))->withTimestamps()->withPivot('granted');
     }
@@ -60,14 +60,14 @@ trait HasRoleAndPermission
      * Get only Granted Permissions
      */
     public function grantedPermissions() {
-        return $this->userPermissions()->wherePivot('granted', true);
+        return $this->objectPermissions()->wherePivot('granted', true);
     }
 
     /**
      * Get only Denied Permissions
      */
     public function deniedPermissions() {
-        return $this->userPermissions()->wherePivot('granted', false);
+        return $this->objectPermissions()->wherePivot('granted', false);
     }
 
     /**
@@ -118,9 +118,9 @@ trait HasRoleAndPermission
     {
         if(!$this->permissions){
             $rolePermissions = $this->rolePermissions();
-            $userPermissions = $this->grantedPermissions()->get();
+            $objectPermissions = $this->grantedPermissions()->get();
 
-            $permissions = $rolePermissions->merge($userPermissions);
+            $permissions = $rolePermissions->merge($objectPermissions);
             $deniedPermissions =$this->deniedPermissions()->get();
 
             $this->permissions = $permissions->filter(function($permission) use ($deniedPermissions)
@@ -132,7 +132,7 @@ trait HasRoleAndPermission
     }
 
     /**
-     * Check if the user has a role or roles.
+     * Check if the object has a role or roles.
      *
      * @param int|string|array $role
      * @param bool $all
@@ -148,7 +148,7 @@ trait HasRoleAndPermission
     }
 
     /**
-     * Check if the user has at least one role.
+     * Check if the object has at least one role.
      *
      * @param array $roles
      * @return bool
@@ -165,7 +165,7 @@ trait HasRoleAndPermission
     }
 
     /**
-     * Check if the user has all roles.
+     * Check if the object has all roles.
      *
      * @param array $roles
      * @return bool
@@ -182,7 +182,7 @@ trait HasRoleAndPermission
     }
 
     /**
-     * Check if the user has role.
+     * Check if the object has role.
      *
      * @param int|string $role
      * @return bool
@@ -195,7 +195,7 @@ trait HasRoleAndPermission
     }
     
     /**
-     * Check if the user has a permission or permissions.
+     * Check if the object has a permission or permissions.
      *
      * @param int|string|array $permission
      * @param bool $all
@@ -211,7 +211,7 @@ trait HasRoleAndPermission
     }
 
     /**
-     * Check if the user has at least one permission.
+     * Check if the object has at least one permission.
      *
      * @param array $permissions
      * @return bool
@@ -228,7 +228,7 @@ trait HasRoleAndPermission
     }
 
     /**
-     * Check if the user has all permissions.
+     * Check if the object has all permissions.
      *
      * @param array $permissions
      * @return bool
@@ -245,7 +245,7 @@ trait HasRoleAndPermission
     }
 
     /**
-     * Check if the user has a permission.
+     * Check if the object has a permission.
      *
      * @param int|string $permission
      * @return bool
@@ -258,7 +258,7 @@ trait HasRoleAndPermission
     }
 
     /**
-     * Check if the user is allowed to manipulate with entity.
+     * Check if the object is allowed to manipulate with entity.
      *
      * @param string $providedPermission
      * @param \Illuminate\Database\Eloquent\Model $entity
@@ -280,7 +280,7 @@ trait HasRoleAndPermission
     }
 
     /**
-     * Check if the user is allowed to manipulate with provided entity.
+     * Check if the object is allowed to manipulate with provided entity.
      *
      * @param string $providedPermission
      * @param \Illuminate\Database\Eloquent\Model $entity
@@ -300,7 +300,7 @@ trait HasRoleAndPermission
     }
 
     /**
-     * Attach role to a user.
+     * Attach role to a object.
      *
      * @param int|\NIGAM214\RBAC\Models\Role $role
      * @param bool $granted
@@ -315,7 +315,7 @@ trait HasRoleAndPermission
     }
 
     /**
-     * Detach role from a user.
+     * Detach role from a object.
      *
      * @param int|\NIGAM214\RBAC\Models\Role $role
      * @return int
@@ -326,7 +326,7 @@ trait HasRoleAndPermission
     }
 
     /**
-     * Detach all roles from a user.
+     * Detach all roles from a object.
      *
      * @return int
      */
@@ -336,7 +336,7 @@ trait HasRoleAndPermission
     }
 
     /**
-     * Attach permission to a user.
+     * Attach permission to a object.
      *
      * @param int|\NIGAM214\RBAC\Models\Permission $permission
      * @param bool $granted
@@ -345,31 +345,31 @@ trait HasRoleAndPermission
     public function attachPermission($permission, $granted = true)
     {
         if($granted)
-            return (!$this->grantedPermissions()->get()->contains($permission)) ? $this->userPermissions()->attach($permission, array('granted' => TRUE)) : true;
+            return (!$this->grantedPermissions()->get()->contains($permission)) ? $this->objectPermissions()->attach($permission, array('granted' => TRUE)) : true;
         else
-            return (!$this->deniedPermissions()->get()->contains($permission)) ? $this->userPermissions()->attach($permission, array('granted' => FALSE)) : true;
+            return (!$this->deniedPermissions()->get()->contains($permission)) ? $this->objectPermissions()->attach($permission, array('granted' => FALSE)) : true;
 
     }
 
     /**
-     * Detach permission from a user.
+     * Detach permission from a object.
      *
      * @param int|\NIGAM214\RBAC\Models\Permission $permission
      * @return int
      */
     public function detachPermission($permission)
     {
-        return $this->userPermissions()->detach($permission);
+        return $this->objectPermissions()->detach($permission);
     }
 
     /**
-     * Detach all permissions from a user.
+     * Detach all permissions from a object.
      *
      * @return int
      */
     public function detachAllPermissions()
     {
-        return $this->userPermissions()->detach();
+        return $this->objectPermissions()->detach();
     }
 
     /**

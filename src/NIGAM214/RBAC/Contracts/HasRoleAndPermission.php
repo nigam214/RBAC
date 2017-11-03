@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 interface HasRoleAndPermission
 {
     /**
-     * User belongs to many roles.
+     * Object belongs to many roles.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -21,7 +21,7 @@ interface HasRoleAndPermission
     public function getRoles();
 
     /**
-     * Check if the user has a role or roles.
+     * Check if the object has a role or roles.
      *
      * @param int|string|array $role
      * @param bool $all
@@ -30,7 +30,7 @@ interface HasRoleAndPermission
     public function roleIs($role, $all = false);
 
     /**
-     * Attach role to a user.
+     * Attach role to a object.
      *
      * @param int|\NIGAM214\RBAC\Models\Role $role
      * @param bool $granted
@@ -39,7 +39,7 @@ interface HasRoleAndPermission
     public function attachRole($role, $granted = TRUE);
 
     /**
-     * Detach role from a user.
+     * Detach role from a object.
      *
      * @param int|\NIGAM214\RBAC\Models\Role $role
      * @return int
@@ -47,7 +47,7 @@ interface HasRoleAndPermission
     public function detachRole($role);
 
     /**
-     * Detach all roles from a user.
+     * Detach all roles from a object.
      *
      * @return int
      */
@@ -61,11 +61,11 @@ interface HasRoleAndPermission
     public function rolePermissions();
 
     /**
-     * User belongs to many permissions.
+     * Object belongs to many permissions.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function userPermissions();
+    public function objectPermissions();
 
     /**
      * Get all permissions as collection.
@@ -75,7 +75,7 @@ interface HasRoleAndPermission
     public function getPermissions();
 
     /**
-     * Check if the user has a permission or permissions.
+     * Check if the object has a permission or permissions.
      *
      * @param int|string|array $permission
      * @param bool $all
@@ -84,7 +84,7 @@ interface HasRoleAndPermission
     public function may($permission, $all = false);
 
     /**
-     * Check if the user is allowed to manipulate with entity.
+     * Check if the object is allowed to manipulate with entity.
      *
      * @param string $providedPermission
      * @param \Illuminate\Database\Eloquent\Model $entity
@@ -95,7 +95,7 @@ interface HasRoleAndPermission
     public function allowed($providedPermission, Model $entity, $owner = true, $ownerColumn = 'user_id');
 
     /**
-     * Attach permission to a user.
+     * Attach permission to a object.
      *
      * @param int|\NIGAM214\RBAC\Models\Permission $permission
      * @param bool $granted
@@ -104,7 +104,7 @@ interface HasRoleAndPermission
     public function attachPermission($permission, $granted = TRUE);
 
     /**
-     * Detach permission from a user.
+     * Detach permission from a object.
      *
      * @param int|\NIGAM214\RBAC\Models\Permission $permission
      * @return int
@@ -112,7 +112,7 @@ interface HasRoleAndPermission
     public function detachPermission($permission);
 
     /**
-     * Detach all permissions from a user.
+     * Detach all permissions from a object.
      *
      * @return int
      */

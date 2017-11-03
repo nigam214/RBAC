@@ -6,6 +6,7 @@ Based on the [Bican/Roles](https://github.com/romanbican/roles/) Package.
 ### So whats New?
 
 This package is forked from https://github.com/DynamicCodeNinja/RBAC and modified to open more control on RCAB. Package name has been changed to make it a new project.
+To make this package generic, user has been replaced by object. This RBAC can be applied to any object, not just the user.
 
 ### So whats Different?
 
@@ -13,7 +14,7 @@ The difference is how [Inheritance](#inheritance) work. With Bican/Roles, permis
 
 Instead this package uses a `parent_id` column to enable roles to be inherited from each other.
 
-This enables us to only pull permissions of roles that our users inherits, or that are directly assigned to the user.
+This enables us to only pull permissions of roles that our users/objects inherits, or that are directly assigned to the user/object.
 
 
 - [Installation](#installation)
@@ -95,11 +96,11 @@ And also run migrations.
 
     php artisan migrate
 
-> There must be created migration file for users table, which is in Laravel out of the box.
+> There must be created migration file for users table, which is in Laravel out of the box. For other custom object, there must be a migration file for the objects table.
 
 ### HasRoleAndPermission Trait And Contract
 
-Include `HasRoleAndPermission` trait and also implement `HasRoleAndPermission` contract inside your `User` model.
+Include `HasRoleAndPermission` trait and also implement `HasRoleAndPermission` contract inside your `User` model or `Object` model.
 
 ```php
 use NIGAM214\RBAC\Traits\HasRoleAndPermission;
@@ -108,6 +109,15 @@ use NIGAM214\RBAC\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, HasRoleAndPermissionContract
 {
     use Authenticatable, CanResetPassword, HasRoleAndPermission;
+```
+
+```php
+use NIGAM214\RBAC\Traits\HasRoleAndPermission;
+use NIGAM214\RBAC\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
+
+class Object extends Model implements HasRoleAndPermissionContract
+{
+    use HasRoleAndPermission;
 ```
 
 And that's it!
@@ -136,7 +146,7 @@ $moderatorRole = Role::create([
 
 ### Attaching And Detaching Roles
 
-It's really simple. You fetch a user from database and call `attachRole` method. There is `BelongsToMany` relationship between `User` and `Role` model.
+It's really simple. You fetch a user/object from database and call `attachRole` method. There is `BelongsToMany` relationship between `User`/`Object` and `Role` model.
 
 ```php
 use App\User;
@@ -150,12 +160,21 @@ $user->attachRole($adminRole); //you can pass whole object, or just an id
 $user->detachRole($adminRole); // in case you want to detach role
 $user->detachAllRoles(); // in case you want to detach all roles
 ```
+Example for `Object` model.
+
+```php
+use App\Object;
+$object = Object::find($id);
+$object->attachRole($adminRole); //you can pass whole object, or just an id
+$object->detachRole($adminRole); // in case you want to detach role
+$object->detachAllRoles(); // in case you want to detach all roles
+```
 
 ### Deny Roles
 
-To deny a user a role and all of its children roles, see the following example.
+To deny a user/objet a role and all of its children roles, see the following example.
 
-We recommend that you plan your roles accordingly if you plan on using this feature. As you could easily lock out users without realizing it.
+We recommend that you plan your roles accordingly if you plan on using this feature. As you could easily lock out users/objects without realizing it.
 
 ```php
 use App\User;
@@ -166,9 +185,18 @@ $user = User::find($userId);
 $user->attachRole($role, FALSE); // Deny this role, and all of its decedents to the user regardless of what has been assigned.
 ```
 
+```php
+use App\Object;
+
+$role = Role::find($roleId);
+
+$object = Object::find($objectId);
+$object->attachRole($role, FALSE); // Deny this role, and all of its decedents to the object regardless of what has been assigned.
+```
+
 ### Checking For Roles
 
-You can now check if the user has required role.
+You can now check if the user/object has required role.
 
 ```php
 if ($user->roleIs('admin')) { // you can pass an id or slug
@@ -364,6 +392,8 @@ if ($user->allowed('edit.articles', $article, false)) { // now owner check is di
 
 There are three Blade extensions. Basically, it is replacement for classic if statements.
 
+> Blade extensions will only work for `User` model and get the valid user on blade page via Auth.
+
 ```php
 @role('admin') // @if(Auth::check() && Auth::user()->roleIs('admin'))
     // user is admin
@@ -387,6 +417,8 @@ There are three Blade extensions. Basically, it is replacement for classic if st
 ### Middleware
 
 This package comes with `VerifyRole` and `VerifyPermission` middleware. You must add them inside your `app/Http/Kernel.php` file.
+
+> Blade extensions will only work for `User` model and get the valid user on blade page via Auth.
 
 ```php
 /**

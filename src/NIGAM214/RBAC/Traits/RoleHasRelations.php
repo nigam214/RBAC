@@ -15,11 +15,11 @@ trait RoleHasRelations
     }
 
     /**
-     * Role belongs to many users.
+     * Role belongs to many objects.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users()
+    public function objects()
     {
         return $this->belongsToMany(config('auth.model'))->withTimestamps();
     }
