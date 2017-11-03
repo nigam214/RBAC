@@ -40,6 +40,7 @@ return [
     */
 
     'models' => [
+        'object' => config('auth.providers.users.model'),
         'role' => NIGAM214\RBAC\Models\Role::class,
         'permission' => NIGAM214\RBAC\Models\Permission::class,
     ],

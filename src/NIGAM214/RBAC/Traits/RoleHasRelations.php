@@ -21,7 +21,7 @@ trait RoleHasRelations
      */
     public function objects()
     {
-        return $this->belongsToMany(config('auth.model'))->withTimestamps();
+        return $this->belongsToMany(config('rbac.models.object'))->withTimestamps();
     }
 
     /**
