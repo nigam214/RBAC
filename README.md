@@ -179,7 +179,7 @@ if ($user->roleIs('admin')) { // you can pass an id or slug
 You can also do this:
 
 ```php
-if ($user->isAdmin()) {
+if ($user->roleIsAdmin()) {
     //
 }
 ```
@@ -273,7 +273,7 @@ if ($user->may('create.users') { // you can pass an id or slug
     //
 }
 
-if ($user->canDeleteUsers()) {
+if ($user->mayDeleteUsers()) {
     //
 }
 ```
