@@ -130,6 +130,7 @@ trait HasRoleAndPermission
         }
         return $this->permissions;
     }
+
     /**
      * Check if the user has a role or roles.
      *
@@ -378,7 +379,7 @@ trait HasRoleAndPermission
      */
     private function isPretendEnabled()
     {
-        return (bool) config('roles.pretend.enabled');
+        return (bool) config('rbac.pretend.enabled');
     }
 
     /**
@@ -389,7 +390,7 @@ trait HasRoleAndPermission
      */
     private function pretend($option)
     {
-        return (bool) config('roles.pretend.options.' . $option);
+        return (bool) config('rbac.pretend.options.' . $option);
     }
 
     /**
@@ -425,13 +426,13 @@ trait HasRoleAndPermission
     public function __call($method, $parameters)
     {
         if (starts_with($method, 'roleIs')) {
-            return $this->roleIs(snake_case(substr($method, 6), config('roles.separator')));
+            return $this->roleIs(snake_case(substr($method, 6), config('rbac.separator')));
         } elseif (starts_with($method, 'may')) {
-            return $this->may(snake_case(substr($method, 3), config('roles.separator')));
+            return $this->may(snake_case(substr($method, 3), config('rbac.separator')));
         } elseif (starts_with($method, 'allowed')) {
-            return $this->allowed(snake_case(substr($method, 7), config('roles.separator')), $parameters[0], (isset($parameters[1])) ? $parameters[1] : true, (isset($parameters[2])) ? $parameters[2] : 'user_id');
+            return $this->allowed(snake_case(substr($method, 7), config('rbac.separator')), $parameters[0], (isset($parameters[1])) ? $parameters[1] : true, (isset($parameters[2])) ? $parameters[2] : 'user_id');
         } elseif (starts_with($method, 'hasRole')) {
-            return $this->hasRole(isset($parameters[0]) ? $parameters[0] : snake_case(substr($method, 7), config('roles.separator')));
+            return $this->hasRole(isset($parameters[0]) ? $parameters[0] : snake_case(substr($method, 7), config('rbac.separator')));
         }
 
         return parent::__call($method, $parameters);
