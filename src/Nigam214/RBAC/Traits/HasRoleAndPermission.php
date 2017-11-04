@@ -1,6 +1,6 @@
 <?php
 
-namespace NIGAM214\RBAC\Traits;
+namespace Nigam214\RBAC\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
@@ -302,7 +302,7 @@ trait HasRoleAndPermission
     /**
      * Attach role to a object.
      *
-     * @param int|\NIGAM214\RBAC\Models\Role $role
+     * @param int|\Nigam214\RBAC\Models\Role $role
      * @param bool $granted
      * @return bool|null
      */
@@ -317,7 +317,7 @@ trait HasRoleAndPermission
     /**
      * Detach role from a object.
      *
-     * @param int|\NIGAM214\RBAC\Models\Role $role
+     * @param int|\Nigam214\RBAC\Models\Role $role
      * @return int
      */
     public function detachRole($role)
@@ -338,7 +338,7 @@ trait HasRoleAndPermission
     /**
      * Attach permission to a object.
      *
-     * @param int|\NIGAM214\RBAC\Models\Permission $permission
+     * @param int|\Nigam214\RBAC\Models\Permission $permission
      * @param bool $granted
      * @return bool|null
      */
@@ -354,7 +354,7 @@ trait HasRoleAndPermission
     /**
      * Detach permission from a object.
      *
-     * @param int|\NIGAM214\RBAC\Models\Permission $permission
+     * @param int|\Nigam214\RBAC\Models\Permission $permission
      * @return int
      */
     public function detachPermission($permission)

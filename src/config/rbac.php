@@ -34,15 +34,15 @@ return [
     |--------------------------------------------------------------------------
     |
     | If you want, you can replace default models from this package by models
-    | you created. Have a look at `NIGAM214\RBAC\Models\Role` model and
-    | `NIGAM214\RBAC\Models\Permission` model.
+    | you created. Have a look at `Nigam214\RBAC\Models\Role` model and
+    | `Nigam214\RBAC\Models\Permission` model.
     |
     */
 
     'models' => [
         'object' => config('auth.providers.users.model'),
-        'role' => NIGAM214\RBAC\Models\Role::class,
-        'permission' => NIGAM214\RBAC\Models\Permission::class,
+        'role' => Nigam214\RBAC\Models\Role::class,
+        'permission' => Nigam214\RBAC\Models\Permission::class,
     ],
 
     /*

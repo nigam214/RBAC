@@ -14,7 +14,7 @@ module.exports = function(grunt){
         copy: {
             all: {
                 files: [
-                    {expand: true, src: ['src/**'], dest: '/home/sniper7kills/websites/NIGAM214-CMS/vendor/nigam214/rbac/'}
+                    {expand: true, src: ['src/**'], dest: '/home/sniper7kills/websites/Nigam214-CMS/vendor/nigam214/rbac/'}
                 ]
             }
         },

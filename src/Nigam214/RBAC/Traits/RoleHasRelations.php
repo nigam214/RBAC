@@ -1,6 +1,6 @@
 <?php
 
-namespace NIGAM214\RBAC\Traits;
+namespace Nigam214\RBAC\Traits;
 
 trait RoleHasRelations
 {

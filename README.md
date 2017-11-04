@@ -80,7 +80,7 @@ Add the package to your application service providers in `config/app.php` file.
     /**
      * Third Party Service Providers...
      */
-    NIGAM214\RBAC\RBACServiceProvider::class,
+    Nigam214\RBAC\RBACServiceProvider::class,
 
 ],
 ```
@@ -89,8 +89,8 @@ Add the package to your application service providers in `config/app.php` file.
 
 Publish the package config file and migrations to your application. Run these commands inside your terminal.
 
-    php artisan vendor:publish --provider="NIGAM214\RBAC\RBACServiceProvider" --tag=config
-    php artisan vendor:publish --provider="NIGAM214\RBAC\RBACServiceProvider" --tag=migrations
+    php artisan vendor:publish --provider="Nigam214\RBAC\RBACServiceProvider" --tag=config
+    php artisan vendor:publish --provider="Nigam214\RBAC\RBACServiceProvider" --tag=migrations
 
 And also run migrations.
 
@@ -103,8 +103,8 @@ And also run migrations.
 Include `HasRoleAndPermission` trait and also implement `HasRoleAndPermission` contract inside your `User` model or `Object` model.
 
 ```php
-use NIGAM214\RBAC\Traits\HasRoleAndPermission;
-use NIGAM214\RBAC\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
+use Nigam214\RBAC\Traits\HasRoleAndPermission;
+use Nigam214\RBAC\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, HasRoleAndPermissionContract
 {
@@ -112,8 +112,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 ```
 
 ```php
-use NIGAM214\RBAC\Traits\HasRoleAndPermission;
-use NIGAM214\RBAC\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
+use Nigam214\RBAC\Traits\HasRoleAndPermission;
+use Nigam214\RBAC\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 
 class Object extends Model implements HasRoleAndPermissionContract
 {
@@ -127,7 +127,7 @@ And that's it!
 ### Creating Roles
 
 ```php
-use NIGAM214\RBAC\Models\Role;
+use Nigam214\RBAC\Models\Role;
 
 $adminRole = Role::create([
     'name' => 'Admin',
@@ -238,7 +238,7 @@ if ($user->roleIs('admin|moderator.*')) { // or $user->roleIs('admin, moderator.
 It's very simple thanks to `Permission` model.
 
 ```php
-use NIGAM214\RBAC\Models\Permission;
+use Nigam214\RBAC\Models\Permission;
 
 $createUsersPermission = Permission::create([
     'name' => 'Create users',
@@ -258,7 +258,7 @@ You can attach permissions to a role or directly to a specific user (and of cour
 
 ```php
 use App\User;
-use NIGAM214\RBAC\Models\Role;
+use Nigam214\RBAC\Models\Role;
 
 $role = Role::find($roleId);
 $role->attachPermission($createUsersPermission); // permission attached to a role
@@ -285,7 +285,7 @@ Denied permissions take precedent over inherited and granted permissions.
 
 ```php
 use App\User;
-use NIGAM214\RBAC\Models\Role;
+use Nigam214\RBAC\Models\Role;
 
 $role = Role::find($roleId);
 $role->attachPermission($createUsersPermission, FALSE); // Deny this permission to all users who have or inherit this role.
@@ -363,7 +363,7 @@ Let's say you have an article and you want to edit it. This article belongs to a
 
 ```php
 use App\Article;
-use NIGAM214\RBAC\Models\Permission;
+use Nigam214\RBAC\Models\Permission;
 
 $editArticlesPermission = Permission::create([
     'name' => 'Edit articles',
@@ -430,8 +430,8 @@ protected $routeMiddleware = [
     'auth' => \App\Http\Middleware\Authenticate::class,
     'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
     'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-    'role' => \NIGAM214\RBAC\Middleware\VerifyRole::class,
-    'permission' => \NIGAM214\RBAC\Middleware\VerifyPermission::class,
+    'role' => \Nigam214\RBAC\Middleware\VerifyRole::class,
+    'permission' => \Nigam214\RBAC\Middleware\VerifyPermission::class,
 ];
 ```
 
@@ -454,7 +454,7 @@ $router->post('/example', [
 You also can pass multiple parameters on `VerifyPermission` and `VerifyRole` middleware,
 example: `role:admin,moderator,true`, the last parameter will be used to determine if user has all role or just any of the role passed, default value would be `false`.
 
-It throws `\NIGAM214\RBAC\Exception\RoleDeniedException` or `\NIGAM214\RBAC\Exception\PermissionDeniedException` exceptions if it goes wrong.
+It throws `\Nigam214\RBAC\Exception\RoleDeniedException` or `\Nigam214\RBAC\Exception\PermissionDeniedException` exceptions if it goes wrong.
 
 You can catch these exceptions inside `app/Exceptions/Handler.php` file and do whatever you want.
 
@@ -468,7 +468,7 @@ You can catch these exceptions inside `app/Exceptions/Handler.php` file and do w
  */
 public function render($request, Exception $e)
 {
-    if ($e instanceof \NIGAM214\RBAC\Exceptions\RoleDeniedException) {
+    if ($e instanceof \Nigam214\RBAC\Exceptions\RoleDeniedException) {
         // you can for example flash message, redirect...
         return redirect()->back();
     }

@@ -1,22 +1,22 @@
 <?php
 
-namespace NIGAM214\RBAC\Models;
+namespace Nigam214\RBAC\Models;
 
-use NIGAM214\RBAC\Traits\Slugable;
+use Nigam214\RBAC\Traits\Slugable;
 use Illuminate\Database\Eloquent\Model;
-use NIGAM214\RBAC\Traits\RoleHasRelations;
-use NIGAM214\RBAC\Contracts\RoleHasRelations as RoleHasRelationsContract;
+use Nigam214\RBAC\Traits\PermissionHasRelations;
+use Nigam214\RBAC\Contracts\PermissionHasRelations as PermissionHasRelationsContract;
 
-class Role extends Model implements RoleHasRelationsContract
+class Permission extends Model implements PermissionHasRelationsContract
 {
-    use Slugable, RoleHasRelations;
+    use Slugable, PermissionHasRelations;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'description', 'parent_id'];
+    protected $fillable = ['name', 'slug', 'description', 'model'];
 
     /**
      * Create a new model instance.

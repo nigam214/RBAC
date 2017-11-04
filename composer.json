@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-0": {
-            "NIGAM214\\RBAC": "src/"
+            "Nigam214\\RBAC": "src/"
         }
     }
 }
