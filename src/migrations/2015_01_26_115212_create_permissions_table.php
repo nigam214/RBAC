@@ -12,15 +12,17 @@ class CreatePermissionsTable extends Migration
      */
     public function up()
     {
-        $permissions = str_plural(config('rbac.names.permission'));
-        Schema::create($permissions, function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->string('description')->nullable();
-            $table->string('model')->nullable();
-            $table->timestamps();
-        });
+        foreach (config('rbac.rbac') as $rbacName => $rbac) {
+            $permissions = str_plural(config("rbac.rbac.${rbacName}.names.permission"));
+            Schema::create($permissions, function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+                $table->string('slug')->unique();
+                $table->string('description')->nullable();
+                $table->string('model')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -30,7 +32,9 @@ class CreatePermissionsTable extends Migration
      */
     public function down()
     {
-        $permissions = str_plural(config('rbac.names.permission'));
-        Schema::drop($permissions);
+        foreach (config('rbac.rbac') as $rbacName => $rbac) {
+            $permissions = str_plural(config("rbac.rbac.${rbacName}.names.permission"));
+            Schema::drop($permissions);
+        }
     }
 }

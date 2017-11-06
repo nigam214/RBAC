@@ -11,7 +11,7 @@ trait PermissionHasRelations
      */
     public function roles()
     {
-        return $this->belongsToMany(config('rbac.models.role'))->withTimestamps();
+        return $this->belongsToMany(config('rbac.rbac.' . $this->rbacName . '.models.role'))->withTimestamps();
     }
 
     /**
@@ -21,6 +21,6 @@ trait PermissionHasRelations
      */
     public function objects()
     {
-        return $this->belongsToMany(config('rbac.models.object'))->withTimestamps();
+        return $this->belongsToMany(config('rbac.rbac.' . $this->rbacName . '.models.object'))->withTimestamps();
     }
 }

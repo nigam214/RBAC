@@ -11,7 +11,7 @@ trait RoleHasRelations
      */
     public function permissions()
     {
-        return $this->belongsToMany(config('rbac.models.permission'))->withTimestamps()->withPivot('granted');
+        return $this->belongsToMany(config('rbac.rbac.' . $this->rbacName . '.models.permission'))->withTimestamps()->withPivot('granted');
     }
 
     /**
@@ -21,7 +21,7 @@ trait RoleHasRelations
      */
     public function objects()
     {
-        return $this->belongsToMany(config('rbac.models.object'))->withTimestamps();
+        return $this->belongsToMany(config('rbac.rbac.' . $this->rbacName . '.models.object'))->withTimestamps();
     }
 
     /**
@@ -32,7 +32,7 @@ trait RoleHasRelations
 
     public function parent()
     {
-        return $this->belongsTo(config('rbac.models.role'),'parent_id');
+        return $this->belongsTo(config('rbac.rbac.' . $this->rbacName . '.models.role'),'parent_id');
     }
 
     public function ancestors()
@@ -54,7 +54,7 @@ trait RoleHasRelations
      */
     public function children()
     {
-        return $this->hasMany(config('rbac.models.role'),'parent_id');
+        return $this->hasMany(config('rbac.rbac.' . $this->rbacName . '.models.role'),'parent_id');
     }
 
     public function descendants()

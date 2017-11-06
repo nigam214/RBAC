@@ -12,16 +12,18 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        $roles = str_plural(config('rbac.names.role'));
-        Schema::create($roles, function (Blueprint $table) use($roles) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->string('description')->nullable();
-            $table->integer('parent_id')->unsigned()->nullable();
-            $table->foreign('parent_id')->references('id')->on($roles);
-            $table->timestamps();
-        });
+        foreach (config('rbac.rbac') as $rbacName => $rbac) {
+            $roles = str_plural(config("rbac.rbac.${rbacName}.names.role"));
+            Schema::create($roles, function (Blueprint $table) use($roles) {
+                $table->increments('id');
+                $table->string('name');
+                $table->string('slug')->unique();
+                $table->string('description')->nullable();
+                $table->integer('parent_id')->unsigned()->nullable();
+                $table->foreign('parent_id')->references('id')->on($roles);
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -31,7 +33,9 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        $roles = str_plural(config('rbac.names.role'));
-        Schema::drop($roles);
+        foreach (config('rbac.rbac') as $rbacName => $rbac) {
+            $roles = str_plural(config("rbac.rbac.${rbacName}.names.role"));
+            Schema::drop($roles);
+        }
     }
 }

@@ -101,6 +101,7 @@ And also run migrations.
 ### HasRoleAndPermission Trait And Contract
 
 Include `HasRoleAndPermission` trait and also implement `HasRoleAndPermission` contract inside your `User` model or `Object` model.
+Also, include `$rbacName` in your `User` model or `Object` model.
 
 ```php
 use Nigam214\RBAC\Traits\HasRoleAndPermission;
@@ -109,6 +110,7 @@ use Nigam214\RBAC\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, HasRoleAndPermissionContract
 {
     use Authenticatable, CanResetPassword, HasRoleAndPermission;
+    public $rbacName = "user_role_permission";
 ```
 
 ```php
@@ -118,7 +120,12 @@ use Nigam214\RBAC\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract
 class Object extends Model implements HasRoleAndPermissionContract
 {
     use HasRoleAndPermission;
+    public $rbacName = "user_role_permission";
 ```
+
+> If `Role` or `Permission` model is extends, then `rbacName` must be define in each models as given for `User` model.
+
+> `rbacName` must match with one of the name given in rbac config file.
 
 And that's it!
 

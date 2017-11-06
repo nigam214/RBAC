@@ -12,6 +12,14 @@ class Permission extends Model implements PermissionHasRelationsContract
     use Slugable, PermissionHasRelations;
 
     /**
+     * Property to identify rbac name.
+     * Should match with one of config('rbac.rbac')
+     *
+     * @var String
+     */
+    public $rbacName = "user_role_permission";
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
