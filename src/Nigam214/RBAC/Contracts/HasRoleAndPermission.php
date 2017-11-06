@@ -81,7 +81,7 @@ interface HasRoleAndPermission
      * @param bool $all
      * @return bool
      */
-    public function may($permission, $all = false);
+    public function can($permission, $all = false);
 
     /**
      * Check if the object is allowed to manipulate with entity.

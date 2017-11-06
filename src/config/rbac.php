@@ -73,7 +73,7 @@ return [
     |
     | You can pretend or simulate package behavior no matter what is in your
     | database. It is really useful when you are testing you application.
-    | Set up what will methods roleIs(), may() and allowed() return.
+    | Set up what will methods roleIs(), can() and allowed() return.
     |
     */
 
@@ -83,7 +83,7 @@ return [
 
         'options' => [
             'roleIs' => true,
-            'may' => true,
+            'can' => true,
             'allowed' => true,
         ],
 

@@ -201,7 +201,7 @@ trait HasRoleAndPermission
      * @param bool $all
      * @return bool
      */
-    public function may($permission, $all = false)
+    public function can($permission, $all = false)
     {
         if ($this->isPretendEnabled()) {
             return $this->pretend('can');
@@ -427,8 +427,8 @@ trait HasRoleAndPermission
     {
         if (starts_with($method, 'roleIs')) {
             return $this->roleIs(snake_case(substr($method, 6), config('rbac.separator')));
-        } elseif (starts_with($method, 'may')) {
-            return $this->may(snake_case(substr($method, 3), config('rbac.separator')));
+        } elseif (starts_with($method, 'can')) {
+            return $this->can(snake_case(substr($method, 3), config('rbac.separator')));
         } elseif (starts_with($method, 'allowed')) {
             return $this->allowed(snake_case(substr($method, 7), config('rbac.separator')), $parameters[0], (isset($parameters[1])) ? $parameters[1] : true, (isset($parameters[2])) ? $parameters[2] : 'user_id');
         } elseif (starts_with($method, 'hasRole')) {

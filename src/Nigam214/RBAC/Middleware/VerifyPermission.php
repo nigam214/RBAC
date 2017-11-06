@@ -35,7 +35,7 @@ class VerifyPermission
     public function handle($request, Closure $next, ...$permissions)
     {
         $all = filter_var(array_values(array_slice($permissions, -1))[0], FILTER_VALIDATE_BOOLEAN);
-        if ($this->auth->check() && $this->auth->user()->may($permissions, $all)) {
+        if ($this->auth->check() && $this->auth->user()->can($permissions, $all)) {
             return $next($request);
         }
 

@@ -304,11 +304,11 @@ $user->attachPermission($deleteUsersPermission, FALSE); // Deny this permission 
 ### Checking For Permissions
 
 ```php
-if ($user->may('create.users') { // you can pass an id or slug
+if ($user->can('create.users') { // you can pass an id or slug
     //
 }
 
-if ($user->mayDeleteUsers()) {
+if ($user->canDeleteUsers()) {
     //
 }
 ```
@@ -406,7 +406,7 @@ There are three Blade extensions. Basically, it is replacement for classic if st
     // user is admin
 @endrole
 
-@permission('edit.articles') // @if(Auth::check() && Auth::user()->may('edit.articles'))
+@permission('edit.articles') // @if(Auth::check() && Auth::user()->can('edit.articles'))
     // user can edit articles
 @endpermission
 
