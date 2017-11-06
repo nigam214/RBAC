@@ -3,6 +3,13 @@ Powerful package for handling roles and permissions in Laravel 5.3
 
 Based on the [Bican/Roles](https://github.com/romanbican/roles/) Package.
 
+### Resources
+
+- Packagist: https://packagist.org/packages/nigam214/rbac
+- Github: https://github.com/nigam214/RBAC
+- Forked From: https://github.com/DynamicCodeNinja/RBAC
+- Based On: https://github.com/romanbican/roles
+
 ### So whats New?
 
 This package is forked from https://github.com/DynamicCodeNinja/RBAC and modified to open more control on RCAB. Package name has been changed to make it a new project.
