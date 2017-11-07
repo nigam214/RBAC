@@ -36,7 +36,7 @@ interface HasRoleAndPermission
      * @param bool $granted
      * @return bool|null
      */
-    public function attachRole($role, $granted = TRUE);
+    public function attachRole($role, $owner_id, $granted = TRUE);
 
     /**
      * Detach role from a object.
@@ -101,7 +101,7 @@ interface HasRoleAndPermission
      * @param bool $granted
      * @return bool|null
      */
-    public function attachPermission($permission, $granted = TRUE);
+    public function attachPermission($permission, $owner_id, $granted = TRUE);
 
     /**
      * Detach permission from a object.

@@ -25,6 +25,8 @@ class CreateRoleObjectTable extends Migration
                 $table->integer($object . '_id')->unsigned()->index();
                 $table->foreign($object . '_id')->references('id')->on($objects)->onDelete('cascade');
                 $table->boolean('granted')->default(true);
+                $table->integer(config("rbac.owner.id"))->unsigned();
+                $table->foreign(config("rbac.owner.id"))->references('id')->on(str_plural(config("rbac.owner.model")));
                 $table->timestamps();
             });
         }

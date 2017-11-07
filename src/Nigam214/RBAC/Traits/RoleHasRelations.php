@@ -74,9 +74,9 @@ trait RoleHasRelations
      * @param bool $granted
      * @return bool|int
      */
-    public function attachPermission($permission, $granted = true)
+    public function attachPermission($permission, $owner_id, $granted = true)
     {
-        return (!$this->permissions()->get()->contains($permission)) ? $this->permissions()->attach($permission, array('granted' => $granted)) : true;
+        return (!$this->permissions()->get()->contains($permission)) ? $this->permissions()->attach($permission, array('granted' => $granted, config("rbac.owner.id") => $owner_id)) : true;
     }
 
     /**

@@ -21,6 +21,8 @@ class CreateRolesTable extends Migration
                 $table->string('description')->nullable();
                 $table->integer('parent_id')->unsigned()->nullable();
                 $table->foreign('parent_id')->references('id')->on($roles);
+                $table->integer(config("rbac.owner.id"))->unsigned();
+                $table->foreign(config("rbac.owner.id"))->references('id')->on(str_plural(config("rbac.owner.model")));
                 $table->timestamps();
             });
         }

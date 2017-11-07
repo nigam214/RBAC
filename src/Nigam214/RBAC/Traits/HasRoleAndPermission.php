@@ -306,12 +306,12 @@ trait HasRoleAndPermission
      * @param bool $granted
      * @return bool|null
      */
-    public function attachRole($role, $granted = TRUE)
+    public function attachRole($role, $owner_id, $granted = TRUE)
     {
         if($granted)
-            return (!$this->grantedRoles()->get()->contains($role)) ? $this->roles()->attach($role, array('granted' => TRUE)) : true;
+            return (!$this->grantedRoles()->get()->contains($role)) ? $this->roles()->attach($role, array('granted' => TRUE, config("rbac.owner.id") => $owner_id)) : true;
         else
-            return (!$this->deniedRoles()->get()->contains($role)) ? $this->roles()->attach($role, array('granted' => FALSE)) : true;
+            return (!$this->deniedRoles()->get()->contains($role)) ? $this->roles()->attach($role, array('granted' => FALSE, config("rbac.owner.id") => $owner_id)) : true;
     }
 
     /**
@@ -342,12 +342,12 @@ trait HasRoleAndPermission
      * @param bool $granted
      * @return bool|null
      */
-    public function attachPermission($permission, $granted = true)
+    public function attachPermission($permission, $owner_id, $granted = true)
     {
         if($granted)
-            return (!$this->grantedPermissions()->get()->contains($permission)) ? $this->objectPermissions()->attach($permission, array('granted' => TRUE)) : true;
+            return (!$this->grantedPermissions()->get()->contains($permission)) ? $this->objectPermissions()->attach($permission, array('granted' => TRUE, config("rbac.owner.id") => $owner_id)) : true;
         else
-            return (!$this->deniedPermissions()->get()->contains($permission)) ? $this->objectPermissions()->attach($permission, array('granted' => FALSE)) : true;
+            return (!$this->deniedPermissions()->get()->contains($permission)) ? $this->objectPermissions()->attach($permission, array('granted' => FALSE, config("rbac.owner.id") => $owner_id)) : true;
 
     }
 

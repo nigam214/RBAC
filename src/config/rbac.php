@@ -30,6 +30,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Role, Permission and its Assignment Owner
+    |--------------------------------------------------------------------------
+    |
+    | Here you can configure the plugin to use owner tracking for roles,
+    | permissions, and its assignment for the object.
+    |
+    | model: model name of owner, ex. user
+    | id: onwer id used in RBAC tables
+    |
+    */
+
+    'owner' => [
+        'model' => 'user',
+        'id' => 'owner_id',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | RBAC: collection of User, Role, and Permission for RBAC
     |--------------------------------------------------------------------------
     |

@@ -20,6 +20,8 @@ class CreatePermissionsTable extends Migration
                 $table->string('slug')->unique();
                 $table->string('description')->nullable();
                 $table->string('model')->nullable();
+                $table->integer(config("rbac.owner.id"))->unsigned();
+                $table->foreign(config("rbac.owner.id"))->references('id')->on(str_plural(config("rbac.owner.model")));
                 $table->timestamps();
             });
         }

@@ -143,17 +143,23 @@ And that's it!
 ```php
 use Nigam214\RBAC\Models\Role;
 
-$adminRole = Role::create([
+$authUser = User::where('email' = $email)->first();
+
+$adminRole = new Role([
     'name' => 'Admin',
     'slug' => 'admin',
     'description' => '', // optional
     'parent_id' => NULL, // optional, set to NULL by default
 ]);
+$adminRole->owner_id = $authUser->id; // `owner_id` should match with config('rbac.owner.id')
+$adminRole->save();
 
-$moderatorRole = Role::create([
+$moderatorRole = new Role([
     'name' => 'Forum Moderator',
     'slug' => 'forum.moderator',
 ]);
+$moderatorRole->owner_id = $authUser->id; // `owner_id` should match with config('rbac.owner.id')
+$moderatorRole->save();
 ```
 
 > Because of `Slugable` trait, if you make a mistake and for example leave a space in slug parameter, it'll be replaced with a dot automatically, because of `str_slug` function.
@@ -165,9 +171,11 @@ It's really simple. You fetch a user/object from database and call `attachRole` 
 ```php
 use App\User;
 
+$authUser = User::where('email' = $email)->first();
+
 $user = User::find($id);
 
-$user->attachRole($adminRole); //you can pass whole object, or just an id
+$user->attachRole($adminRole, $authUser->id); //you can pass whole object, or just an id
 ```
 
 ```php
@@ -178,8 +186,9 @@ Example for `Object` model.
 
 ```php
 use App\Object;
+$authUser = User::where('email' = $email)->first();
 $object = Object::find($id);
-$object->attachRole($adminRole); //you can pass whole object, or just an id
+$object->attachRole($adminRole, $authUser->id); //you can pass whole object, or just an id
 $object->detachRole($adminRole); // in case you want to detach role
 $object->detachAllRoles(); // in case you want to detach all roles
 ```
@@ -193,19 +202,23 @@ We recommend that you plan your roles accordingly if you plan on using this feat
 ```php
 use App\User;
 
+$authUser = User::where('email' = $email)->first();
+
 $role = Role::find($roleId);
 
 $user = User::find($userId);
-$user->attachRole($role, FALSE); // Deny this role, and all of its decedents to the user regardless of what has been assigned.
+$user->attachRole($role, $authUser->id, FALSE); // Deny this role, and all of its decedents to the user regardless of what has been assigned.
 ```
 
 ```php
 use App\Object;
 
+$authUser = User::where('email' = $email)->first();
+
 $role = Role::find($roleId);
 
 $object = Object::find($objectId);
-$object->attachRole($role, FALSE); // Deny this role, and all of its decedents to the object regardless of what has been assigned.
+$object->attachRole($role, $authUser->id, FALSE); // Deny this role, and all of its decedents to the object regardless of what has been assigned.
 ```
 
 ### Checking For Roles
@@ -254,16 +267,22 @@ It's very simple thanks to `Permission` model.
 ```php
 use Nigam214\RBAC\Models\Permission;
 
-$createUsersPermission = Permission::create([
+$authUser = User::where('email' = $email)->first();
+
+$createUsersPermission = new Permission([
     'name' => 'Create users',
     'slug' => 'create.users',
     'description' => '', // optional
 ]);
+$createUsersPermission->owner_id = $authUser->id; // `owner_id` should match with config('rbac.owner.id')
+$createUsersPermission->save();
 
-$deleteUsersPermission = Permission::create([
+$deleteUsersPermission = new Permission([
     'name' => 'Delete users',
     'slug' => 'delete.users',
 ]);
+$deleteUsersPermission->owner_id = $authUser->id; // `owner_id` should match with config('rbac.owner.id')
+$deleteUsersPermission->save();
 ```
 
 ### Attaching And Detaching Permissions
@@ -274,11 +293,13 @@ You can attach permissions to a role or directly to a specific user (and of cour
 use App\User;
 use Nigam214\RBAC\Models\Role;
 
+$authUser = User::where('email' = $email)->first();
+
 $role = Role::find($roleId);
-$role->attachPermission($createUsersPermission); // permission attached to a role
+$role->attachPermission($createUsersPermission, $authUser->id); // permission attached to a role
 
 $user = User::find($userId);
-$user->attachPermission($deleteUsersPermission); // permission attached to a user
+$user->attachPermission($deleteUsersPermission, $authUser->id); // permission attached to a user
 ```
 
 ```php
@@ -301,11 +322,13 @@ Denied permissions take precedent over inherited and granted permissions.
 use App\User;
 use Nigam214\RBAC\Models\Role;
 
+$authUser = User::where('email' = $email)->first();
+
 $role = Role::find($roleId);
-$role->attachPermission($createUsersPermission, FALSE); // Deny this permission to all users who have or inherit this role.
+$role->attachPermission($createUsersPermission, $authUser->id, FALSE); // Deny this permission to all users who have or inherit this role.
 
 $user = User::find($userId);
-$user->attachPermission($deleteUsersPermission, FALSE); // Deny this permission to this user regardless of what roles they are in.
+$user->attachPermission($deleteUsersPermission, $authUser->id, FALSE); // Deny this permission to this user regardless of what roles they are in.
 ```
 
 ### Checking For Permissions
@@ -379,13 +402,17 @@ Let's say you have an article and you want to edit it. This article belongs to a
 use App\Article;
 use Nigam214\RBAC\Models\Permission;
 
-$editArticlesPermission = Permission::create([
+$authUser = User::where('email' = $email)->first();
+
+$editArticlesPermission = new Permission([
     'name' => 'Edit articles',
     'slug' => 'edit.articles',
     'model' => 'App\Article',
 ]);
+$editArticlesPermission->owner_id = $authUser->id; // `owner_id` should match with config('rbac.owner.id')
+$editArticlesPermission->save();
 
-$user->attachPermission($editArticlesPermission);
+$user->attachPermission($editArticlesPermission, $authUser->id);
 
 $article = Article::find(1);
 

@@ -25,6 +25,8 @@ class CreatePermissionRoleTable extends Migration
                 $table->integer($role . '_id')->unsigned()->index();
                 $table->foreign($role . '_id')->references('id')->on($roles)->onDelete('cascade');
                 $table->boolean('granted')->default(true);
+                $table->integer(config("rbac.owner.id"))->unsigned();
+                $table->foreign(config("rbac.owner.id"))->references('id')->on(str_plural(config("rbac.owner.model")));
                 $table->timestamps();
             });
         }
