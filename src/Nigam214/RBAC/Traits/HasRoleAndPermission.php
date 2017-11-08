@@ -29,7 +29,7 @@ trait HasRoleAndPermission
      */
     public function roles()
     {
-        return $this->belongsToMany(config('rbac.rbac.' . $this->rbacName . '.models.role'))->withTimestamps()->withPivot('granted');
+        return $this->belongsToMany(config('rbac.rbac.' . $this->rbacName . '.models.role'))->withTimestamps()->withPivot('granted', config('rbac.owner.id'));
     }
 
     /**
@@ -53,7 +53,7 @@ trait HasRoleAndPermission
      */
     public function objectPermissions()
     {
-        return $this->belongsToMany(config('rbac.rbac.' . $this->rbacName . '.models.permission'))->withTimestamps()->withPivot('granted');
+        return $this->belongsToMany(config('rbac.rbac.' . $this->rbacName . '.models.permission'))->withTimestamps()->withPivot('granted', config('rbac.owner.id'));
     }
 
     /**
